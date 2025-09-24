@@ -4,6 +4,7 @@ import TagPanel from '../panels/TagPanel';
 import GatePanel from '../panels/GatePanel';
 import TagNode from '../canvas/elements/TagNode';
 import GateNode from '../canvas/elements/GateNode';
+import JunctionNode from '../canvas/elements/JunctionNode';
 import ConnectorLine from '../canvas/elements/ConnectorLine';
 import TempConnectorLine from '../canvas/elements/TempConnectorLine';
 import WaypointHandle from '../canvas/elements/WaypointHandle';
@@ -12,6 +13,7 @@ import { useNodeStore, useConnectionStore, usePortStore, useTransformStore } fro
 import { createTagNode, createGateNode } from '../core/models';
 import { GateType } from '../core/types';
 import { useConnectionDrawing } from '../hooks/useConnectionDrawing';
+import { useKeyboardHandler } from '../hooks/useKeyboardHandler';
 
 const EditorPage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +39,9 @@ const EditorPage: React.FC = () => {
     handleMouseMove,
     cancelConnection
   } = useConnectionDrawing();
+
+  // Enable keyboard shortcuts
+  useKeyboardHandler();
 
   // Update canvas size on window resize
   useEffect(() => {
@@ -278,6 +283,16 @@ const EditorPage: React.FC = () => {
             } else if (node.type === 'gate') {
               return (
                 <GateNode
+                  key={node.id}
+                  node={node}
+                  onConnectionStart={handleConnectionStart}
+                  onConnectionEnd={handleConnectionEnd}
+                  isDrawingConnection={isDrawing}
+                />
+              );
+            } else if (node.type === 'junction') {
+              return (
+                <JunctionNode
                   key={node.id}
                   node={node}
                   onConnectionStart={handleConnectionStart}

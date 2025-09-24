@@ -1,14 +1,5 @@
-import { GateType, NodeId, NodeType, Position, Size } from "../types";
-
-export interface BaseNode {
-  id: NodeId;
-  type: NodeType;
-  position: Position;
-  size: Size;
-  label: string;
-  selected?: boolean;
-  zIndex?: number;
-}
+import { GateType, NodeId, Position, Size, BaseNode } from "../types";
+import { JunctionNode } from './junctionModel';
 
 export interface TagNode extends BaseNode {
   type: 'tag';
@@ -23,7 +14,7 @@ export interface GateNode extends BaseNode {
   timerValue?: number;   // For PDTIMER gate time in seconds (default: 5)
 }
 
-export type NodeModel = TagNode | GateNode;
+export type NodeModel = TagNode | GateNode | JunctionNode;
 
 export const createTagNode = (
   id: NodeId,

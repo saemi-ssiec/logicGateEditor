@@ -48,18 +48,36 @@ const ConnectorLine: React.FC<ConnectorLineProps> = ({
   }, [onDblClick]);
 
   return (
-    <Line
-      points={points}
-      stroke={selected ? '#6366f1' : '#9ca3af'}
-      strokeWidth={selected ? 3 : 2}
-      lineCap="round"
-      lineJoin="round"
-      onClick={onClick}
-      onDblClick={handleDblClick}
-      hitStrokeWidth={10} // Make it easier to click on the line
-      perfectDrawEnabled={false}
-      shadowForStrokeEnabled={false}
-    />
+    <>
+      {/* Shadow line for selected connections */}
+      {selected && (
+        <Line
+          points={points}
+          stroke="#6366f1"
+          strokeWidth={7}
+          lineCap="round"
+          lineJoin="round"
+          opacity={0.3}
+          perfectDrawEnabled={false}
+          shadowForStrokeEnabled={false}
+        />
+      )}
+
+      {/* Main line */}
+      <Line
+        points={points}
+        stroke={selected ? '#6366f1' : '#9ca3af'}
+        strokeWidth={selected ? 3 : 2}
+        lineCap="round"
+        lineJoin="round"
+        onClick={onClick}
+        onDblClick={handleDblClick}
+        hitStrokeWidth={10} // Make it easier to click on the line
+        perfectDrawEnabled={false}
+        shadowForStrokeEnabled={false}
+        dash={selected ? [5, 3] : undefined}
+      />
+    </>
   );
 };
 

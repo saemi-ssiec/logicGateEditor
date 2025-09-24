@@ -4,7 +4,7 @@ export type NodeId = string;
 export type PortId = string;
 export type ConnectionId = string;
 
-export type NodeType = 'tag' | 'gate';
+export type NodeType = 'tag' | 'gate' | 'junction';
 export type GateType = 'AND' | 'OR' | 'NOT' | 'NAND' | 'NOR' | 'COMPARATOR' | 'RISING' | 'FALLING' | 'PDTIMER' | 'LABEL' | 'SWITCH';
 export type PortDirection = 'input' | 'output';
 
@@ -37,4 +37,14 @@ export interface DragState {
     type: 'node' | 'port' | 'connection';
     id: string;
   };
+}
+
+export interface BaseNode {
+  id: NodeId;
+  type: NodeType;
+  position: Position;
+  size: Size;
+  label: string;
+  selected?: boolean;
+  zIndex?: number;
 }
